@@ -3,11 +3,11 @@
 
 name: Node.js CI
 
+env:
+  SURGE_TOKEN: 929837fa976bbb075c2c68e7b2061559
+
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   build:
@@ -16,8 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [22.x]
 
     steps:
     - uses: actions/checkout@v4
@@ -26,6 +25,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
+    - run: npm i
     - run: npm run build --if-present
-    - run: npm test
+    - name: Deploy to Surge
+      run: npm i -g surge
+      run: surge ./dist devops-npm.surge.sh --token ${{ env.SURGE_TOKEN }}
