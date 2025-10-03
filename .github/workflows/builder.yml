@@ -27,6 +27,5 @@ jobs:
         cache: 'npm'
     - run: npm i
     - run: npm run build --if-present
-    - name: Deploy to Surge
     - run: npm i -g surge
     - run: surge ./dist devops-npm.surge.sh --token 929837fa976bbb075c2c68e7b2061559
