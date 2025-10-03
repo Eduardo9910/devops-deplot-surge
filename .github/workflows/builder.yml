@@ -3,9 +3,6 @@
 
 name: Node.js CI
 
-env:
-  SURGE_TOKEN: 929837fa976bbb075c2c68e7b2061559
-
 on:
   push:
 
@@ -28,4 +25,4 @@ jobs:
     - run: npm i
     - run: npm run build --if-present
     - run: npm i -g surge
-    - run: surge ./dist devops-npm.surge.sh --token 929837fa976bbb075c2c68e7b2061559
+    - run: surge ./dist devops-npm.surge.sh --token ${{ secrets.SURGE_TOKEN }}
